@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lose on Purpose: Janken Game</title>
+  <!-- スタイルシート読み込み -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- TensorFlow.js読み込み -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <!-- Mediapipe関連ライブラリ -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+</head>
+<body>
+  <!-- ヘッダー（共通） -->
+  <header>
+    <div class="header-left">
+      <a href="index.html" class="index-link">Top</a>
+    </div>
+    <div class="header-center">
+      <h1>Janken Game</h1>
+    </div>
+    <div class="header-right">
+      <!-- 右側は空 -->
+    </div>
+  </header>
+
+  <!-- メインエリア -->
+  <main>
+    <!-- ヘッダー以外の領域をラップするコンテナ -->
+    <div class="content-container">
+      <!-- ゲームコンテンツ -->
+      <section id="game-section">
+        <div class="game-content">
+          <!-- 左側：CPU handエリア（ゲームスタート前は非表示） -->
+          <div id="cpu-hand-area" class="game-column" style="display: none;">
+            <img id="cpuHandImg" src="" alt="CPU hand" width="450" />
+          </div>
+          <!-- 右側：手のランドマーク表示エリア -->
+          <div id="landmark-area" class="game-column">
+            <canvas id="canvas"></canvas>
+            <!-- 手未検出時のオーバーレイ -->
+            <div id="no-hand-msg" class="overlay-msg">カメラに手を映してください</div>
+          </div>
+        </div>
+
+        <!-- Lose Count と Time Left -->
+        <div class="info-box">
+          <div class="info-item">
+            <span>Lose Count:</span><span id="loseCount">0</span>
+          </div>
+          <div class="info-item">
+            <span>Time Left:</span><span id="timeLeft">--</span> 秒
+          </div>
+        </div>
+      </section>
+
+      <!-- ゲームオーバー表示用のオーバーレイ -->
+      <div id="gameover">
+        <div class="gameover-content">
+          <h2>GAME END</h2>
+          <p>あなたの最終スコア: <span id="finalScore">0</span></p>
+          <button id="retryButton" class="action-button">Retry</button>
+        </div>
+      </div>
+      <!-- カウントダウンオーバーレイ -->
+      <div id="countdownOverlay"></div>
+    </div>
+  </main>
+
+  <!-- カメラ映像用（非表示） -->
+  <video id="video" autoplay muted style="display: none;"></video>
+
+  <!-- メインスクリプト -->
+  <script src="script.js"></script>
+  <script>
+    // ページ読み込み時に自動でカウントダウン開始
+    window.addEventListener('load', function() {
+      showCountdownOverlay(3);
+    });
+  </script>
+</body>
+</html>
