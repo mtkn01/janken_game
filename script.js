@@ -6,7 +6,7 @@ let cpuHand = CPU_HANDS[Math.floor(Math.random() * 3)];
 let loseCount = 0;
 
 // 時間制限(秒)
-const PLAY_TIME = 5;
+const PLAY_TIME = 20;
 let startTime = null; // ゲーム開始時は startTime をセット
 
 // TensorFlow.jsモデル
