@@ -159,6 +159,7 @@ function showCountdownOverlay(seconds) {
   
   // カウントダウン中はCPU handエリアとランドマーク表示エリアを非表示に
   document.getElementById('cpu-hand-area').style.display = 'none';
+  document.getElementById('cpu-hand-area').style.visibility = 'hidden'; // Ensure visibility is hidden initially
   document.getElementById('landmark-area').style.display = 'none';
   
   countdownOverlay.style.display = 'flex';
@@ -174,6 +175,7 @@ function showCountdownOverlay(seconds) {
       countdownOverlay.style.display = 'none';
       // カウントダウン終了後に表示する
       document.getElementById('cpu-hand-area').style.display = 'block';
+      document.getElementById('cpu-hand-area').style.visibility = 'visible'; // Set visibility to visible
       document.getElementById('landmark-area').style.display = 'block';
       startGame();
     }
@@ -249,7 +251,7 @@ function onResults(results) {
 
   // CPU Handの画像更新（既に表示中の画像と異なる場合のみ更新）
   if (cpuHandImg.dataset.current !== cpuHand) {
-    cpuHandImg.src = preloadedImages[cpuHand].src;
+    cpuHandImg.src = handImagePaths[cpuHand]; // Use relative path from handImagePaths
     cpuHandImg.dataset.current = cpuHand;
   }
 

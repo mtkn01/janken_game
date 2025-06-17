@@ -2,8 +2,8 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lose on Purpose: Janken Game</title>
-  <!-- スタイルシート読み込み -->
   <link rel="stylesheet" href="style.css" />
 
   <!-- TensorFlow.js読み込み -->
@@ -14,70 +14,64 @@
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
 </head>
 <body>
-  <!-- ヘッダー（共通） -->
   <header>
-    <div class="header-left">
-      <a href="index.html" class="index-link">Top</a>
-    </div>
-    <div class="header-center">
-      <h1>Janken Game</h1>
-    </div>
-    <div class="header-right">
-      <!-- 右側は空 -->
-    </div>
+    <h1>Janken Game</h1>
+    <a href="index.html" class="top-link">Top Page</a>
   </header>
 
-  <!-- メインエリア -->
   <main>
-    <!-- ヘッダー以外の領域をラップするコンテナ -->
     <div class="content-container">
-      <!-- ゲームコンテンツ -->
       <section id="game-section">
         <div class="game-content">
-          <!-- 左側：CPU handエリア（ゲームスタート前は非表示） -->
-          <div id="cpu-hand-area" class="game-column" style="display: none;">
-            <img id="cpuHandImg" src="" alt="CPU hand" width="450" />
+          <div id="cpu-hand-area" class="game-column">
+            <h3>CPU</h3>
+            <div class="hand-display">
+              <img id="cpuHandImg" src="" alt="CPU hand" />
+            </div>
           </div>
-          <!-- 右側：手のランドマーク表示エリア -->
           <div id="landmark-area" class="game-column">
-            <canvas id="canvas"></canvas>
-            <!-- 手未検出時のオーバーレイ -->
-            <div id="no-hand-msg" class="overlay-msg">カメラに手を映してください</div>
+            <h3>YOU</h3>
+            <div class="camera-wrapper">
+              <canvas id="canvas"></canvas>
+              <div id="no-hand-msg" class="overlay-msg">カメラに手を映してください</div>
+            </div>
           </div>
         </div>
 
-        <!-- Lose Count と Time Left -->
         <div class="info-box">
           <div class="info-item">
-            <span>Lose Count:</span><span id="loseCount">0</span>
+            <span>Lose Count</span>
+            <span id="loseCount">0</span>
           </div>
           <div class="info-item">
-            <span>Time Left:</span><span id="timeLeft">--</span> 秒
+            <span>Time Left</span>
+            <span id="timeLeft">--</span>
           </div>
         </div>
       </section>
 
-      <!-- ゲームオーバー表示用のオーバーレイ -->
       <div id="gameover">
         <div class="gameover-content">
           <h2>GAME END</h2>
-          <p>あなたの最終スコア: <span id="finalScore">0</span></p>
-          <button id="retryButton" class="action-button">Retry</button>
+          <p>FINAL SCORE: <span id="finalScore">0</span></p>
+          <div class="button-group">
+            <button id="retryButton" class="action-button">Retry</button>
+            <button class="action-button secondary" onclick="location.href='index.html'">Home</button>
+          </div>
         </div>
       </div>
-      <!-- カウントダウンオーバーレイ -->
       <div id="countdownOverlay"></div>
     </div>
   </main>
 
-  <!-- カメラ映像用（非表示） -->
   <video id="video" autoplay muted style="display: none;"></video>
 
-  <!-- メインスクリプト -->
   <script src="script.js"></script>
   <script>
     // ページ読み込み時に自動でカウントダウン開始
     window.addEventListener('load', function() {
+      // CPUエリアを最初は非表示にする
+      document.getElementById('cpu-hand-area').style.visibility = 'hidden';
       showCountdownOverlay(3);
     });
   </script>
